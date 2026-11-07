@@ -484,28 +484,39 @@ export default function HeroSnake({ hero, onExit }) {
   // ---------------------- Swipe (celular) ----------------------
   const touch = useRef(null);
   const onTouchStart = (e) => {
+    // si el toque es en un botón (Jugar otra vez, Cambiar héroe), no lo usa el tablero
+    if (e.target.closest("button")) { touch.current = null; return; }
     const t = e.touches[0];
     touch.current = { x: t.clientX, y: t.clientY };
   };
   const onTouchEnd = (e) => {
-    if (!touch.current) return;
+    if (!touch.current || e.target.closest("button")) return;
     const t = e.changedTouches[0];
     const dx = t.clientX - touch.current.x;
     const dy = t.clientY - touch.current.y;
     touch.current = null;
     if (Math.max(Math.abs(dx), Math.abs(dy)) < 20) {
-      if (phaseRef.current !== "playing") start();
+      // un toque simple solo inicia en la pantalla de inicio, no en Game Over
+      if (phaseRef.current === "ready") start();
       return;
     }
+    if (phaseRef.current === "over") return; // en Game Over solo funcionan los botones
     if (Math.abs(dx) > Math.abs(dy)) pushDir({ x: Math.sign(dx), y: 0 });
     else pushDir({ x: 0, y: Math.sign(dy) });
+  };
+
+  // los botones de la cruceta responden apenas tocas, sin esperar el click
+  const press = (fn) => (e) => {
+    e.preventDefault();
+    if (navigator.vibrate) navigator.vibrate(10);
+    fn();
   };
 
   return (
     <div className="hs-wrap">
       <div className="hs-top">
         <button className="hs-btn ghost" onClick={onExit}>‹ ARCADE</button>
-        <div className="hs-title">CAZA VILLANOS</div>
+        <div className="hs-title">CONQUISTA</div>
         <button className="hs-btn ghost" onClick={toggleMute} aria-label="Sonido">
           {muted ? "🔇" : "🔊"}
         </button>
@@ -558,11 +569,11 @@ export default function HeroSnake({ hero, onExit }) {
             <div className="hs-panel">
               <h2 className="red">¡GAME OVER!</h2>
               <p>{reason.toUpperCase()}</p>
-              <p className="big">{hud.captured} VILLANOS · {hud.points} PTS</p>
+              <p className="big">{hud.captured} CONQUISTAS · {hud.points} PTS</p>
               {hud.points >= best && hud.points > 0 && <p className="newbest">¡NUEVO RÉCORD!</p>}
               <div className="hs-row">
                 <button className="hs-btn" onClick={start}>JUGAR OTRA VEZ</button>
-                <button className="hs-btn ghost" onClick={onExit}>CAMBIAR HÉROE</button>
+                <button className="hs-btn ghost" onClick={onExit}>CAMBIAR PERSONAJE</button>
               </div>
             </div>
           </div>
@@ -579,11 +590,11 @@ export default function HeroSnake({ hero, onExit }) {
 
       {/* Control táctil para celular */}
       <div className="hs-dpad">
-        <button onClick={() => pushDir({ x: 0, y: -1 })} className="up">▲</button>
-        <button onClick={() => pushDir({ x: -1, y: 0 })} className="left">◀</button>
-        <button onClick={togglePause} className="mid">II</button>
-        <button onClick={() => pushDir({ x: 1, y: 0 })} className="right">▶</button>
-        <button onClick={() => pushDir({ x: 0, y: 1 })} className="down">▼</button>
+        <button onPointerDown={press(() => pushDir({ x: 0, y: -1 }))} className="up" aria-label="Arriba">▲</button>
+        <button onPointerDown={press(() => pushDir({ x: -1, y: 0 }))} className="left" aria-label="Izquierda">◀</button>
+        <button onPointerDown={press(togglePause)} className="mid" aria-label="Pausa">II</button>
+        <button onPointerDown={press(() => pushDir({ x: 1, y: 0 }))} className="right" aria-label="Derecha">▶</button>
+        <button onPointerDown={press(() => pushDir({ x: 0, y: 1 }))} className="down" aria-label="Abajo">▼</button>
       </div>
     </div>
   );

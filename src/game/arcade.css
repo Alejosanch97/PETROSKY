@@ -433,3 +433,40 @@ body { background: var(--bg1); margin: 0; }
 @keyframes blink { 50% { opacity: 0 } }
 @keyframes flicker { 0%, 92%, 100% { opacity: 1 } 93% { opacity: .6 } 95% { opacity: 1 } 96% { opacity: .7 } }
 @keyframes rainbow { 0% { color: #ff3b5c } 33% { color: #ffe14a } 66% { color: #4fe3ff } 100% { color: #ff3b5c } }
+
+/* ---------- Celular: más responsive ---------- */
+.hs-dpad button,
+.hs-btn {
+  touch-action: manipulation;          /* sin retraso ni zoom por doble toque */
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@media (max-width: 700px) {
+  .arcade { padding: 12px 10px 24px; }
+
+  /* el tablero se achica para que la cruceta siempre quepa en pantalla */
+  .hs-wrap { max-width: min(600px, calc(100dvh - 300px)); }
+
+  .hs-top { margin-bottom: 8px; }
+  .hs-btn { padding: 10px 12px; font-size: 9px; }
+  .hs-hud { padding: 8px 10px; }
+  .hs-stat b { font-size: 15px; }
+  .hs-ticker { font-size: 18px; padding: 6px 10px; }
+
+  .hs-panel { padding: 16px 12px; }
+  .hs-panel p { font-size: 8px; }
+  .hs-row { flex-direction: column; }
+  .hs-row .hs-btn { width: 100%; padding: 14px; font-size: 10px; }
+
+  /* cruceta más grande y fácil de presionar */
+  .hs-dpad {
+    grid-template-columns: repeat(3, 76px);
+    grid-template-rows: repeat(3, 64px);
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .hs-dpad button { font-size: 24px; }
+  .hs-dpad button:active { transform: scale(0.92); background: #4a35a6; }
+}
