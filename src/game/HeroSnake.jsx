@@ -198,7 +198,7 @@ export default function HeroSnake({ hero, onExit }) {
       const grows = g.target && g.target.x === nx && g.target.y === ny;
       const body = grows ? g.snake : g.snake.slice(0, -1);
       if (!star && body.some((s) => s.x === nx && s.y === ny))
-        return die(g, "¡Te enredaste con tus propios prisioneros!");
+        return die(g, "¡Te enredaste con tus propias conquistas!");
 
       // objetos en el tablero
       const idx = g.items.findIndex((i) => i.x === nx && i.y === ny);
@@ -207,7 +207,7 @@ export default function HeroSnake({ hero, onExit }) {
         g.items.splice(idx, 1);
         const cx = center(nx), cy = center(ny);
         if (it.type === "bomb") {
-          if (!star) return die(g, "¡Caíste en una trampa del villano!");
+          if (!star) return die(g, "¡Caíste en una trampa encantadora!");
           g.points += 50;
           burst(g, cx, cy, "#ff9d1f", 24);
           popText(g, cx, cy, "¡DESACTIVADA! +50", "#ff9d1f");
