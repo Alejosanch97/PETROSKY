@@ -163,7 +163,7 @@ export const VILLAINS = [
   },
   {
     id: "catya",
-    name: "Catya Sombra",
+    name: "Catya",
     crime: "solo viaja en helicoptero",
     color: "#37474f",
     palette: { D: "#212121", G: "#cfd8dc", E: "#000000" },
