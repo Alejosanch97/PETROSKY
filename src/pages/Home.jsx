@@ -5,7 +5,7 @@ import { HEROES, VILLAINS } from "../game/sprites";
 import "../game/arcade.css";
 
 export const Home = () => {
-  const [screen, setScreen] = useState("arcade"); // arcade | select | game
+  const [screen, setScreen] = useState("arcade"); // arcade | notice | select | game
   const [hero, setHero] = useState(HEROES[0]);
 
   return (
@@ -20,7 +20,7 @@ export const Home = () => {
           <p className="subtitle">El Realismo Mágico · Elige tu juego</p>
 
           <div className="cards">
-            <article className="card featured" onClick={() => setScreen("select")}>
+            <article className="card featured" onClick={() => setScreen("notice")}>
               <header>Entregando Contratos</header>
               <div className="preview">
                 <div className="preview-chain">
@@ -50,6 +50,27 @@ export const Home = () => {
               <p>Un nuevo juego llega pronto.</p>
               <span className="play off">BLOQUEADO</span>
             </article>
+          </div>
+        </main>
+      )}
+
+      {screen === "notice" && (
+        <main className="notice">
+          <div className="notice-box">
+            <span className="notice-tag">⚠ AVISO</span>
+            <p>
+              "Este videojuego es una obra de ficción con fines exclusivamente humorísticos, 
+              satíricos y de entretenimiento. Cualquier semejanza con personas o hechos reales 
+              es pura coincidencia o con intención puramente paródica."
+            </p>
+            <div className="notice-actions">
+              <button className="hs-btn" onClick={() => setScreen("select")}>
+                ENTENDIDO, JUGAR ›
+              </button>
+              <button className="hs-btn ghost" onClick={() => setScreen("arcade")}>
+                VOLVER
+              </button>
+            </div>
           </div>
         </main>
       )}

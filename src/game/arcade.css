@@ -470,3 +470,36 @@ body { background: var(--bg1); margin: 0; }
   .hs-dpad button { font-size: 24px; }
   .hs-dpad button:active { transform: scale(0.92); background: #4a35a6; }
 }
+
+/* ---------- Aviso legal ---------- */
+.notice {
+  min-height: 70vh;
+  display: flex; align-items: center; justify-content: center;
+}
+.notice-box {
+  max-width: 520px; width: 100%;
+  background: var(--panel);
+  border: 3px solid var(--yellow);
+  border-radius: 12px;
+  box-shadow: 0 0 0 3px #140c2b, 0 0 30px rgba(255,225,74,.35);
+  padding: 28px 22px;
+  text-align: center;
+  animation: pop .25s ease-out;
+}
+.notice-tag {
+  display: inline-block;
+  font-family: var(--pixel); font-size: 12px; letter-spacing: 3px;
+  color: #140c2b; background: var(--yellow);
+  padding: 8px 12px; border-radius: 4px; margin-bottom: 18px;
+}
+.notice-box p { font-size: 26px; line-height: 1.3; color: #fff; margin: 0 0 24px; }
+.notice-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.notice-actions .hs-btn { padding: 14px 18px; font-size: 11px; }
+
+@keyframes pop { from { transform: scale(.9); opacity: 0 } to { transform: scale(1); opacity: 1 } }
+
+@media (max-width: 700px) {
+  .notice-box p { font-size: 22px; }
+  .notice-actions { flex-direction: column; }
+  .notice-actions .hs-btn { width: 100%; }
+}
